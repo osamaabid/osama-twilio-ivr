@@ -35,7 +35,8 @@ Please keep the following points in mind:
 ### Bonus
 
 - Use Typescript
-- Use NestJS or any other node.js framework.
+- Use NestJS or any other node.js framework
+- Use [OpenAPI/Swagger Docs](https://swagger.io/solutions/api-documentation/) to document your APIs
 
 ### Use case
 
