@@ -18,48 +18,41 @@ class TwilioController implements Controller {
   }
 
   private initializeRoutes(): void {
-    this.router.get(
-      `${this.path}/call-activity-records`,
-      //   validationMiddleware(twilioValidate.create),
-      this.callActivity
-    );
+    this.router.get(`${this.path}/call-activity-records`, this.callActivity);
 
     this.router.post(
       `${this.path}/`,
       twilio.webhook({ validate: false }),
-      //   validationMiddleware(twilioValidate.create),
+      //   validationMiddleware(twilioValidate.createCall),
       this.createCall
     );
 
     this.router.post(
       `${this.path}/call-process`,
       twilio.webhook({ validate: false }),
-      //   validationMiddleware(twilioValidate.create),
       this.processCall
     );
 
     this.router.post(
       `${this.path}/call-forwarding`,
       twilio.webhook({ validate: false }),
-      //   validationMiddleware(twilioValidate.create),
       this.forwardCall
     );
 
     this.router.post(
       `${this.path}/call-record`,
       twilio.webhook({ validate: false }),
-      //   validationMiddleware(twilioValidate.create),
       this.recordCall
     );
 
     this.router.post(
       `${this.path}/record-completed`,
       twilio.webhook({ validate: false }),
-      //   validationMiddleware(twilioValidate.create),
       this.recordComplete
     );
   }
 
+  //Calls a service that sets up call and forwards it to call processing route
   private createCall = async (
     req: Request,
     res: Response,
@@ -81,6 +74,7 @@ class TwilioController implements Controller {
     }
   };
 
+  //Calls a service that asks users on call for forwarding or voice recording and routes accordingly. If correct option is not selected, The options are repeated
   private processCall = async (
     req: Request,
     res: Response,
@@ -105,6 +99,7 @@ class TwilioController implements Controller {
     }
   };
 
+  //Calls a service that performs call forwarding and calls on given number
   private forwardCall = async (
     req: Request,
     res: Response,
@@ -138,6 +133,7 @@ class TwilioController implements Controller {
     }
   };
 
+  //Calls a service that perform Voice recording
   private recordCall = async (
     req: Request,
     res: Response,
@@ -159,6 +155,7 @@ class TwilioController implements Controller {
     }
   };
 
+  //Calls a service that saves the recording
   private recordComplete = async (
     req: Request,
     res: Response,
@@ -186,6 +183,7 @@ class TwilioController implements Controller {
     }
   };
 
+  //Calls a service that gets all the calls status saved in DB
   private callActivity = async (
     req: Request,
     res: Response,
